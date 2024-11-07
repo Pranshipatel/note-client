@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Route, Routes, useNavigate } from 'react-router-dom'
 import Register from '../pages/Register'
 import Login from '../pages/Login'
@@ -10,6 +10,8 @@ import Notes from '../pages/Notes'
 const AppRoutes = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  
+  
   return (
     <>
       <Routes>

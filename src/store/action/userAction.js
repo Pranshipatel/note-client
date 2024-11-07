@@ -1,6 +1,10 @@
 import axios  from "../../utils/axios";
 import { setUser } from "../reducers/userSlice";
 
+export const getUser = ()=>{
+
+}
+
 export const registerUser = (data, navigate)=>async(dispatch)=>{
 try {
     const response = await axios.post('/auth/register', data);
@@ -20,3 +24,4 @@ export const loginUser = (data,navigate)=>async(dispatch)=>{
         console.log(error.message)
     }
 }
+
