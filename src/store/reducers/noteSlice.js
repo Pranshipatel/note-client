@@ -10,8 +10,11 @@ export const noteSlice = createSlice({
     addNote: (state, action) => {
       state.push(action.payload); // Adding a single note
     },
+    removeNote:(state,action)=>{
+      return state.filter(note => note._id !== action.payload)
+    }
   },
 });
 
-export const { setnote, addNote } = noteSlice.actions;
+export const { setnote, addNote , removeNote} = noteSlice.actions;
 export default noteSlice.reducer;

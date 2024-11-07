@@ -54,9 +54,9 @@ const Notes = () => {
 
         <div className="div w-full h-[90%] flex p-3 gap-2">
         {notes.length > 0 ? (
-          notes.map((note, index) => (
+          notes.map((note,index) => (
             
-            <NoteCard key={index} title={note.title} content={note.content} />
+            <NoteCard key={index} title={note.title} content={note.content} noteId={note._id} />
           ))
         ) : (
           <p>No notes available.</p>

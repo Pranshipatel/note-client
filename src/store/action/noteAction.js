@@ -1,5 +1,5 @@
 import axios from "../../utils/axios";
-import { addNote, setnote } from "../reducers/noteSlice";
+import { addNote, removeNote, setnote } from "../reducers/noteSlice";
 
 export const createNote = (noteData) => async (dispatch) => {
   try {
@@ -19,3 +19,12 @@ export const fetchNote = () => async (dispatch) => {
   }
 };
 
+export const deleteNote = (noteId)=> async(dispatch)=>{
+  try {
+    await axios.delete(`/note/delete/${noteId}`)
+    dispatch(removeNote(noteId))
+   
+  } catch (error) {
+    console.log(error)
+  }
+}
