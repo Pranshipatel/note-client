@@ -3,7 +3,7 @@ import CreateNote from '../noteComponents/CreateNote';
 import NoteCard from '../noteComponents/NoteCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchNote } from '../../store/action/noteAction';
-import Navbar from './Navbar';
+import Navbar from '../noteComponents/Navbar';
 
 
 const Notes = () => {

@@ -28,3 +28,15 @@ export const deleteNote = (noteId)=> async(dispatch)=>{
     console.log(error)
   }
 }
+
+export const fetchNoteById = (id) => {
+  return async (dispatch) => {
+    try {
+      const response = await fetch(`/api/notes/${id}`);
+      const data = await response.json();
+      dispatch({ type: 'FETCH_NOTE_BY_ID', payload: data });
+    } catch (error) {
+      console.error('Error fetching note:', error);
+    }
+  };
+};

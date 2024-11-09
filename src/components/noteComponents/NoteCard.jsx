@@ -1,13 +1,20 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteNote } from '../../store/action/noteAction';
+import { useNavigate } from 'react-router-dom';
 
 const NoteCard = ({noteId,title, content}) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleDeleteNote = ()=>{
     dispatch(deleteNote(noteId))
   }
+  
+  const viewHandler = ()=>{
+    navigate(`/view/${noteId}`)
+  }
+  
   return (
     <div className="card bg-red-400 w-[15rem] h-[15rem] flex flex-col p-2 justify-between rounded-md shadow-md">
       <div className="card-body flex-grow">
