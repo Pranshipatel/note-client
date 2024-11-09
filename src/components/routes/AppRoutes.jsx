@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom'
 import Register from '../pages/Register'
 import Login from '../pages/Login'
@@ -10,23 +10,42 @@ import View from '../pages/View'
 import { getUser } from '../../store/action/userAction'
 
 const ProtectedRoutes = ({ children }) => {
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
-  const { user } = useSelector((store) => store.user || {})
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { user } = useSelector((store) => store.user || {});
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (!user) {
-      dispatch(getUser(navigate))
-    }
-  }, [dispatch])
+    const fetchData = async () => {
+      if (!user) {
+        try {
+          await dispatch(getUser()); // Await dispatch to complete before proceeding
+        } catch (error) {
+          console.log('Error fetching user:', error);
+        } finally {
+          setIsLoading(false);
+          if (!user) {
+            navigate("/"); // Redirect if user is not logged in after fetching
+          }
+        }
+      } else {
+        setIsLoading(false); // User is already available, stop loading
+      }
+    };
+    fetchData();
+  }, [user, dispatch, navigate]);
 
-  if (!user) {
-    navigate("/"); 
-    return null;
+  if (isLoading) {
+    return <div>Loading...</div>; // Or any custom loader component
   }
 
-  return children
-}
+  return user ? children : null; // Only render children if user is authenticated
+};
+
+
+
+
+
 
 const AppRoutes = () => {
   return (
@@ -61,6 +80,8 @@ const AppRoutes = () => {
             </ProtectedRoutes>
           }
         />
+
+        
       </Routes>
     </>
   )

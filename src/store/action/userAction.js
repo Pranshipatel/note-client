@@ -4,7 +4,7 @@ import { setUser } from "../reducers/userSlice";
 
 export const getUser = ()=>async(dispatch)=>{
   try {
-    const { data } = await axios.get("/user", { withCredentials: true });    
+    const { data } = await axios.get("/", { withCredentials: true });    
     console.log(data)
     dispatch(setUser(data.user))
   } catch (error) {

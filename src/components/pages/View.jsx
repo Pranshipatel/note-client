@@ -1,22 +1,31 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux'; // If using Redux
-import { fetchNoteById } from '../../store/action/noteAction'; // Action to fetch single note
+import React, { useEffect } from 'react';
+import { Navigate, useParams, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteNote, fetchNoteById } from '../../store/action/noteAction';
 
 const View = () => {
-  const { id } = useParams();  // Get the note ID from URL
+  const { noteId } = useParams();
   const dispatch = useDispatch();
-  const note = useSelector((state) => state.notes.find((note) => note._id === id)); // Assuming notes are stored in Redux
+  const navigate = useNavigate();
 
-  // Fetch note if not found
+  const note = useSelector((state) => state.notes.find((note) => note._id === noteId));
+
+  const handleDeleteNote = () => {
+    dispatch(deleteNote(noteId));
+  };
+
+  const handleEditNote = () => {
+    navigate(`/edit/${noteId}`);
+  };
+
   useEffect(() => {
     if (!note) {
-      dispatch(fetchNoteById(id)); // Fetch note data if not in store
+      dispatch(fetchNoteById(noteId));
     }
-  }, [id, note, dispatch]);
+  }, [noteId, note, dispatch]);
 
   if (!note) {
-    return <p>Loading...</p>;  // Loading state while fetching
+    return <Navigate to='/note' />;
   }
 
   return (
@@ -26,10 +35,10 @@ const View = () => {
         <p className="text-lg text-gray-100 mb-8">{note.content}</p>
 
         <div className="flex gap-6 mt-6 justify-center">
-          <button className="bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-8 rounded-lg transition duration-300 transform hover:scale-105">
+          <button onClick={handleEditNote} className="bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-8 rounded-lg transition duration-300 transform hover:scale-105">
             Edit
           </button>
-          <button className="bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-8 rounded-lg transition duration-300 transform hover:scale-105">
+          <button onClick={handleDeleteNote} className="bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-8 rounded-lg transition duration-300 transform hover:scale-105">
             Delete
           </button>
         </div>
