@@ -1,6 +1,11 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const Home = () => {
+    const navigate = useNavigate()
+    const Notenavigate = ()=>{
+        navigate("/note")
+    }
   return (
     <div 
     className="flex items-center justify-center min-h-screen bg-cover bg-center"
@@ -11,7 +16,7 @@ const Home = () => {
         </div>
         <div className="flex flex-col gap-2 p-3">
             <button
-                onClick={() => window.location.href = '/note'}
+                onClick={Notenavigate}
                 className='bg-black text-white py-3 rounded-md w-full'
             >
                 Get Started

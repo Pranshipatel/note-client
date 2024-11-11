@@ -4,9 +4,9 @@ import { setUser } from "../reducers/userSlice";
 
 export const getUser = ()=>async(dispatch)=>{
   try {
-    const { data } = await axios.get("/", { withCredentials: true });    
+    const { data } = await axios.get("/auth/");    
     console.log(data)
-    dispatch(setUser(data.user))
+    dispatch(setUser(data))
   } catch (error) {
     console.log(error)
   }
@@ -27,7 +27,8 @@ try {
 export const loginUser = (data,navigate)=>async(dispatch)=>{
     try {
         const response = await axios.post('/auth/login',data);
-        dispatch(setUser(response.data.user));
+        console.log(response)
+        dispatch(setUser(response.data));
         navigate('/home')
         toast.success("Welcome back")
 

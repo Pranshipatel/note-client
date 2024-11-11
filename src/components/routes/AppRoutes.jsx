@@ -19,13 +19,14 @@ const ProtectedRoutes = ({ children }) => {
     const fetchData = async () => {
       if (!user) {
         try {
-          await dispatch(getUser()); // Await dispatch to complete before proceeding
+      
+          dispatch(getUser());
         } catch (error) {
           console.log('Error fetching user:', error);
         } finally {
           setIsLoading(false);
           if (!user) {
-            navigate("/"); // Redirect if user is not logged in after fetching
+            navigate("/");
           }
         }
       } else {
@@ -36,10 +37,10 @@ const ProtectedRoutes = ({ children }) => {
   }, [user, dispatch, navigate]);
 
   if (isLoading) {
-    return <div>Loading...</div>; // Or any custom loader component
+    return <div>Loading...</div>; 
   }
 
-  return user ? children : null; // Only render children if user is authenticated
+  return user ? children : null; 
 };
 
 
